@@ -1,4 +1,4 @@
-<x-layouts.app>
+﻿<x-layouts.app>
     <div class="container py-5">
         <div class="row g-4">
             <div class="col-lg-7">
@@ -11,7 +11,7 @@
                             <span><i class="fa fa-calendar-alt me-1"></i>{{ optional($event->date)->format('d/m/Y H:i') }}</span>
                             <span><i class="fa fa-map-marker-alt me-1"></i>{{ $event->location }}</span>
                             @if(!is_null($event->capacity))
-                                <span><i class="fa fa-users me-1"></i>Capacité: {{ $event->capacity }}</span>
+                                <span><i class="fa fa-users me-1"></i>CapacitÃ©: {{ $event->capacity }}</span>
                             @endif
                         </div>
                         @if($event->category)
@@ -31,8 +31,8 @@
                             <span class="fs-4 fw-semibold">{{ $event->formatted_price ?? (is_numeric($event->price) ? number_format($event->price, 2, ',', ' ').' FCFA' : 'Gratuit') }}</span>
                         </div>
                         <div class="d-grid gap-2">
-                            <a href="#" class="btn btn-primary">Réserver</a>
-                            <a href="{{ route('event.index') }}" class="btn btn-outline-secondary">Retour aux événements</a>
+                            <a href="#" class="btn btn-primary">RÃ©server</a>
+                            <a href="{{ route('event.index') }}" class="btn btn-outline-secondary">Retour aux Ã©vÃ©nements</a>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                             <li class="mb-2"><i class="fa fa-calendar me-2 text-muted"></i>Date: {{ optional($event->date)->format('d/m/Y H:i') }}</li>
                             <li class="mb-2"><i class="fa fa-map-marker-alt me-2 text-muted"></i>Lieu: {{ $event->location }}</li>
                             @if(!is_null($event->capacity))
-                                <li class="mb-2"><i class="fa fa-users me-2 text-muted"></i>Capacité: {{ $event->capacity }}</li>
+                                <li class="mb-2"><i class="fa fa-users me-2 text-muted"></i>CapacitÃ©: {{ $event->capacity }}</li>
                             @endif
                             @if($event->status)
                                 <li class="mb-2"><i class="fa fa-info-circle me-2 text-muted"></i>Statut: {{ ucfirst($event->status) }}</li>
@@ -56,3 +56,4 @@
         </div>
     </div>
 </x-layouts.app>
+

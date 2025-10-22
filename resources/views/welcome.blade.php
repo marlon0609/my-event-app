@@ -1,4 +1,4 @@
-<x-layouts.app>
+﻿<x-layouts.app>
     <!-- HERO SECTION -->
     <section class="hero-section position-relative overflow-hidden">
         <!-- Background Image -->

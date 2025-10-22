@@ -1,4 +1,14 @@
 {
-    "buildCommand": "npm run build",
-    "outputDirectory": "public"
-  }
+  "buildCommand": "npm run build",
+  "installCommand": "composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader",
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.2"
+    }
+  },
+  "routes": [
+    { "src": "/(css|js|img|storage|favicon.ico|robots.txt)(/.*)?", "dest": "/public/$1$2" },
+    { "src": "/build/(.*)", "dest": "/public/build/$1" },
+    { "src": "/(.*)", "dest": "/api/index.php" }
+  ]
+}
