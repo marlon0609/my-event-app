@@ -3,13 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\FavoriteController;
 use App\Models\Event;
 
 // Route pour la page d'accueil
 Route::get('/', function () {
-    // Récupérer les événements en vedette pour la page d'accueil
-    $events = Event::featured()
-        ->upcoming()
+    // Récupérer des événements à venir pour la page d'accueil (sans exiger 'featured')
+    $events = Event::upcoming()
         ->orderBy('date', 'asc')
         ->limit(3)
         ->get();
@@ -51,6 +53,43 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
 
-// Routes pour les événements
+// Route protégée pour la page profil
+Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth')->name('profile');
+
+// Routes de mise à jour du profil (protégées)
+Route::put('/profile', [AuthController::class, 'updateProfile'])->middleware('auth')->name('profile.update');
+Route::put('/profile/password', [AuthController::class, 'updatePassword'])->middleware('auth')->name('profile.password');
+Route::put('/profile/theme', [AuthController::class, 'updateTheme'])->middleware('auth')->name('profile.theme');
+
+// Routes Dashboard: gestion des événements de l'utilisateur connecté
+Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/events', [EventController::class, 'myIndex'])->name('events.index');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+
+    // Nouvelles pages simples du dashboard
+    Route::get('/reservations', [ReservationController::class, 'myIndex'])->name('reservations');
+    Route::get('/favoris', [FavoriteController::class, 'index'])->name('favorites');
+    Route::get('/historique', fn () => view('dashboard.history'))->name('history');
+    Route::get('/paiements', [PaymentController::class, 'dashboard'])->name('payments');
+    Route::get('/parametres', fn () => view('dashboard.settings'))->name('settings');
+
+    // Paiements - Initiation (protégé)
+    Route::post('/payments/moov/initiate', [PaymentController::class, 'initiateMoov'])->name('payments.moov.initiate');
+    Route::post('/payments/mixx/initiate', [PaymentController::class, 'initiateMixx'])->name('payments.mixx.initiate');
+
+    // Favoris - actions
+    Route::post('/favorites/{event}', [FavoriteController::class, 'store'])->name('favorites.add');
+    Route::delete('/favorites/{event}', [FavoriteController::class, 'destroy'])->name('favorites.remove');
+});
+
+// Paiements - Webhooks (publics, sécuriser via signature/token)
+Route::post('/webhooks/moov', [PaymentController::class, 'moovCallback'])->name('webhooks.moov');
+Route::post('/webhooks/mixx', [PaymentController::class, 'mixxCallback'])->name('webhooks.mixx');
+
+// Routes pour les événements (public)
 Route::get('/events', [EventController::class, 'index'])->name('event.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('event.show');

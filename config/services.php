@@ -35,4 +35,22 @@ return [
         ],
     ],
 
+    // Paiements: Moov Money
+    'moov' => [
+        'base_url' => env('MOOV_BASE_URL', ''),
+        'merchant_id' => env('MOOV_MERCHANT_ID', ''),
+        'api_key' => env('MOOV_API_KEY', ''),
+        'secret' => env('MOOV_SECRET', ''),
+        'callback_url' => env('MOOV_CALLBACK_URL', env('APP_URL').'/webhooks/moov'),
+    ],
+
+    // Paiements: Mixx by Yas
+    'mixx' => [
+        'base_url' => env('MIXX_BASE_URL', ''),
+        'merchant_id' => env('MIXX_MERCHANT_ID', ''),
+        'api_key' => env('MIXX_API_KEY', ''),
+        'secret' => env('MIXX_SECRET', ''),
+        'callback_url' => env('MIXX_CALLBACK_URL', env('APP_URL').'/webhooks/mixx'),
+    ],
+
 ];

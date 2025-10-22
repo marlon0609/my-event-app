@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto px-4">
                 <a href="/" class="fw-bold nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">ACCEUIL</a>
-                <a href="/event" class="fw-bold nav-item nav-link {{ Request::is('event') ? 'active' : '' }}">ÉVÉNEMENTS</a>
+                <a href="/events" class="fw-bold nav-item nav-link {{ Request::is('event') ? 'active' : '' }}">ÉVÉNEMENTS</a>
                 {{-- <a href="/team" class="nav-item nav-link {{ Request::is('team') ? 'active' : '' }}">NOTRE EQUIPE</a> --}}
                 
 

@@ -21,7 +21,7 @@
                         </p>
                         
                         <div class="hero-buttons d-flex flex-column flex-sm-row gap-3 justify-content-center animate-fade-up" style="animation-delay: 0.4s;">
-                            <a href="{{ url('/index') }}" class="btn btn-warning btn-lg px-5 py-3 fw-semibold rounded-pill shadow-lg">
+                            <a href="{{ route('event.index') }}" class="btn btn-warning btn-lg px-5 py-3 fw-semibold rounded-pill shadow-lg">
                                 <i class="fas fa-calendar-alt me-2"></i>
                                 Explorer les événements
                             </a>
@@ -136,11 +136,11 @@
                     <div class="event-card card border-0 shadow-lg h-100 hover-lift">
                         <!-- Event Image -->
                         <div class="event-image-container position-relative overflow-hidden">
-                            <img src="{{ $event->image ? asset('storage/images/events/' . $event->image) : asset('img/default-event.jpg') }}" 
+                            <img src="{{ $event->image ? asset('storage/'.$event->image) : asset('img/ChatGPT_Image.png') }}" 
                                  alt="{{ $event->title }}" 
                                  class="event-image w-100">
                             <div class="event-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-                                <a href="{{ route('event.show', $event->id) }}" class="btn btn-warning btn-lg rounded-pill px-4 py-2">
+                                <a href="{{ route('event.show', $event) }}" class="btn btn-warning btn-lg rounded-pill px-4 py-2">
                                     <i class="fas fa-eye me-2"></i> Voir détails
                                 </a>
                             </div>
@@ -158,15 +158,15 @@
                             <div class="event-meta d-flex justify-content-between align-items-center mb-3">
                                 <span class="event-date badge bg-light text-warning px-3 py-2">
                                     <i class="fas fa-calendar me-1"></i>
-                                    {{ $event->formatted_date ?? 'Date à définir' }}
+                                    {{ optional($event->date)->format('d/m/Y H:i') ?? 'Date à définir' }}
                                 </span>
                                 <span class="event-price fw-bold text-warning fs-5">
-                                    {{ $event->formatted_price ?? 'Gratuit' }}
+                                    {{ $event->formatted_price ?? (is_numeric($event->price) ? number_format($event->price, 2, ',', ' ').' FCFA' : 'Gratuit') }}
                                 </span>
                             </div>
                             
                             <h3 class="event-title h5 fw-bold mb-3 text-warning">
-                                <a href="{{ route('event.show', $event->id) }}" class="text-decoration-none text-warning">{{ $event->title }}</a>
+                                <a href="{{ route('event.show', $event) }}" class="text-decoration-none text-warning">{{ $event->title }}</a>
                             </h3>
                             
                             <p class="event-description text-muted mb-3 line-clamp-3">
@@ -181,7 +181,7 @@
                             @endif
                             
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{{ route('event.show', $event->id) }}" class="btn btn-outline-warning rounded-pill px-4">
+                                <a href="{{ route('event.show', $event) }}" class="btn btn-outline-warning rounded-pill px-4">
                                     Réserver <i class="fas fa-ticket-alt ms-2"></i>
                                 </a>
                                 @if($event->capacity)

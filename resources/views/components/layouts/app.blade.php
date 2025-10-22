@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="{{ auth()->user()?->theme ?? 'light' }}">
     <head> 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,6 +36,12 @@
 
         <!-- Template Stylesheet -->
         <link href="/css/style.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: var(--bs-body-bg);
+                color: var(--bs-body-color);
+            }
+        </style>
     </head>
     <body>
 

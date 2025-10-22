@@ -15,6 +15,23 @@
         <!-- Navigation -->
         <div class="collapse navbar-collapse" id="dashboardNav">
             <ul class="navbar-nav ms-auto align-items-center">
+                <!-- Switch Thème -->
+                <li class="nav-item me-3">
+                    <form method="POST" action="{{ route('profile.theme') }}" class="d-flex align-items-center">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="theme" value="{{ auth()->user()?->theme === 'dark' ? 'dark' : 'light' }}">
+                        <div class="form-check form-switch m-0" title="Basculer le thème">
+                            <input class="form-check-input" type="checkbox" role="switch" id="themeSwitchHeader"
+                                   @checked(auth()->user()?->theme === 'dark')
+                                   onchange="this.form.theme.value = this.checked ? 'dark' : 'light'; this.form.submit();">
+                            <label class="form-check-label ms-2 d-none d-lg-inline" for="themeSwitchHeader">
+                                <i class="fas fa-sun me-1"></i><span class="small">Clair</span> / <i class="fas fa-moon ms-1"></i><span class="small">Sombre</span>
+                            </label>
+                        </div>
+                    </form>
+                </li>
+
                 <!-- Notifications -->
                 <li class="nav-item dropdown me-3">
                     <a class="nav-link position-relative" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown">
@@ -43,7 +60,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0">
                         <li><h6 class="dropdown-header">Mon compte</h6></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Mon profil</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile') }}"><i class="fas fa-user me-2"></i>Mon profil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Paramètres</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-ticket-alt me-2"></i>Mes réservations</a></li>
                         <li><hr class="dropdown-divider"></li>

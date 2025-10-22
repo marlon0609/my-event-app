@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\ResetPasswordNotification;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'theme',
     ];
 
     /**
@@ -56,5 +58,18 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    // User has many events
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    // Ajoutez ceci dans la classe User
+    public function favorites()
+    {
+        return $this->belongsToMany(Event::class, 'favorites')
+            ->withTimestamps();
     }
 }

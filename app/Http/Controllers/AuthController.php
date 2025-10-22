@@ -188,6 +188,98 @@ class AuthController extends Controller
     }
 
     /**
+     * Display the authenticated user's profile
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('auth.profile', compact('user'));
+    }
+
+    /**
+     * Update authenticated user's basic information (name, email)
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        ], [
+            'name.required' => 'Le nom est obligatoire.',
+            'name.max' => 'Le nom ne peut pas dépasser 255 caractères.',
+            'email.required' => 'L\'adresse e-mail est obligatoire.',
+            'email.email' => 'L\'adresse e-mail doit être valide.',
+            'email.unique' => 'Cette adresse e-mail est déjà utilisée.',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        return back()->with('success_profile', '✅ Profil mis à jour avec succès.');
+    }
+
+    /**
+     * Update authenticated user's password
+     */
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required',
+            'password' => 'required|string|min:8|confirmed',
+        ], [
+            'current_password.required' => 'Le mot de passe actuel est obligatoire.',
+            'password.required' => 'Le nouveau mot de passe est obligatoire.',
+            'password.min' => 'Le nouveau mot de passe doit contenir au moins 8 caractères.',
+            'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator, 'password')->withInput();
+        }
+
+        if (! Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Le mot de passe actuel est incorrect.'], 'password');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success_password', '✅ Mot de passe mis à jour avec succès.');
+    }
+
+    /**
+     * Update authenticated user's theme preference (light|dark)
+     */
+    public function updateTheme(Request $request)
+    {
+        $request->validate([
+            'theme' => 'required|in:light,dark',
+        ], [
+            'theme.required' => 'Le thème est requis.',
+            'theme.in' => 'Valeur invalide pour le thème.',
+        ]);
+
+        $user = Auth::user();
+        $user->update(['theme' => $request->string('theme')]);
+        // Rafraîchir l'utilisateur dans la session pour refléter immédiatement le changement
+        $user->refresh();
+        Auth::setUser($user);
+
+        return back()->with('success', 'Préférence de thème mise à jour.');
+    }
+
+    /**
      * Handle logout request
      */
     public function logout(Request $request)

@@ -61,9 +61,9 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <i class="fas fa-euro-sign fa-3x" style="color: #10B981;"></i>
+                        <i class="fas fa-coins fa-3x" style="color: #10B981;"></i>
                     </div>
-                    <h3 class="fw-bold" style="color: #10B981;">245€</h3>
+                    <h3 class="fw-bold" style="color: #10B981;">245 FCFA</h3>
                     <p class="text-muted mb-0">Économisé ce mois</p>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                                     <strong class="small">Rock Festival 2024</strong>
                                     <small class="d-block text-muted">15-17 Juin</small>
                                 </div>
-                                <small class="text-primary fw-bold">89€</small>
+                                <small class="text-primary fw-bold">89 FCFA</small>
                             </div>
                         </div>
                         <div class="list-group-item border-0 px-0">
@@ -215,7 +215,7 @@
                                     <strong class="small">Exposition Picasso</strong>
                                     <small class="d-block text-muted">Jusqu'au 30 Mars</small>
                                 </div>
-                                <small class="text-primary fw-bold">25€</small>
+                                <small class="text-primary fw-bold">25 FCFA</small>
                             </div>
                         </div>
                         <div class="list-group-item border-0 px-0">
@@ -227,7 +227,7 @@
                                     <strong class="small">Marathon de Paris</strong>
                                     <small class="d-block text-muted">14 Avril</small>
                                 </div>
-                                <small class="text-primary fw-bold">45€</small>
+                                <small class="text-primary fw-bold">45 FCFA</small>
                             </div>
                         </div>
                     </div>
