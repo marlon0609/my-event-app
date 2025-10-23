@@ -15,11 +15,7 @@
         "composer.json",
         "composer.lock"
       ],
-      "excludeFiles": [
-        "node_modules/**",
-        "tests/**",
-        ".github/**"
-      ]
+      "excludeFiles": "{node_modules/**,tests/**,.github/**}"
     }
   },
   "routes": [
