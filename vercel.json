@@ -1,9 +1,25 @@
 {
   "buildCommand": "npm run build",
-  "installCommand": "composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader",
   "functions": {
     "api/index.php": {
-      "runtime": "vercel-php@0.6.2"
+      "runtime": "vercel-php@0.6.2",
+      "includeFiles": [
+        "app/**",
+        "bootstrap/**",
+        "config/**",
+        "public/**",
+        "routes/**",
+        "resources/**",
+        "storage/**",
+        "artisan",
+        "composer.json",
+        "composer.lock"
+      ],
+      "excludeFiles": [
+        "node_modules/**",
+        "tests/**",
+        ".github/**"
+      ]
     }
   },
   "routes": [
